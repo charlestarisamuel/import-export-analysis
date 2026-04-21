@@ -1,3 +1,4 @@
+/*this file is made to create the tables*/
 
 CREATE TABLE suppliers (
     supplier_id INT PRIMARY KEY NOT NULL,
