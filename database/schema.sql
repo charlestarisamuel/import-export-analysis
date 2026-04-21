@@ -1,5 +1,14 @@
 /*this file is made to create the tables*/
 
+/*We first drop all the tables in reverse order so that whenever another script runs this file it first deletes the tables before creating them agian because postgres wouldn't let us create tables if they already exist*/
+/*We drop the tables in reverse order of their dependencies if not postgres would send us an error*/
+DROP TABLE IF EXISTS external_signals;
+DROP TABLE IF EXISTS costs;
+DROP TABLE IF EXISTS shipments;
+DROP TABLE IF EXISTS routes;
+DROP TABLE IF EXISTS ports;
+DROP TABLE IF EXISTS suppliers;
+
 CREATE TABLE suppliers (
     supplier_id INT PRIMARY KEY NOT NULL,
     supplier_name VARCHAR(225) NOT NULL,
@@ -68,5 +77,4 @@ CREATE TABLE external_signals (
 
 /*notice routes references ports, and shipments references both routes and suppliers. The order your tables are written matters — PostgreSQL can't create a table that references another table that doesn't exist yet.*/
 /*to run it we need to connect to our database psql -U postgres -d meridian_freight*/
-/*inside the meridian_freight database we ran \i database/schema.sql to execute the script*
-/
+/*inside the meridian_freight database we ran \i database/schema.sql to execute the script*/
