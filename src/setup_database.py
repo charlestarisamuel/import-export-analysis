@@ -12,6 +12,14 @@ def run_schema():
         
     cursor.execute(schema) #this sends the sql to postgres#
     conn.commit() #this is really important - it saves the changes in postgres#
+
+    with open("database/seed_data.sql", "r") as f:
+           seed_data= f.read()
+
+    cursor.execute(seed_data)
+    conn.commit() #don't forget to indent these two lines outside the with block#
+
+
     cursor.close()
     conn.close() #always close the cursor and connection when done#
     print("Database schema created successfully.")
