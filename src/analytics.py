@@ -43,8 +43,22 @@ def get_avg_cost_per_route():
     df = pd.read_sql(query, conn)
     return df 
 
+def get_delayed_shipments_by_supplier():
+    conn = get_engine()
+    query = """
+        SELECT sup.supplier_id, sup.supplier_name, COUNT(*) AS Delayed_Shipments
+        FROM shipments s
+        JOIN suppliers sup ON sup.supplier_id = s.supplier_id
+        WHERE s.status = 'delayed'
+        GROUP BY sup.supplier_id, sup.supplier_name
+        ORDER BY Delayed_Shipments DESC;         
+"""
+    df = pd.read_sql(query, conn)
+    return df
+
+
 if __name__ == "__main__":
-    df = get_avg_cost_per_route()
+    df = get_delayed_shipments_by_supplier()
     print(df)
 
 
