@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS ports;
 DROP TABLE IF EXISTS suppliers;
 
 CREATE TABLE suppliers (
-    supplier_id INT PRIMARY KEY NOT NULL,
+    supplier_id SERIAL PRIMARY KEY NOT NULL,
     supplier_name VARCHAR(225) NOT NULL,
     country VARCHAR(50) NOT NULL,
     contact_email VARCHAR(50),
@@ -23,7 +23,7 @@ CREATE TABLE suppliers (
 );
 
 CREATE TABLE ports (
-    port_id INT PRIMARY KEY NOT NULL,
+    port_id SERIAL PRIMARY KEY NOT NULL,
     port_name VARCHAR(225) NOT NULL,
     country VARCHAR(50) NOT NULL,
     port_type VARCHAR(10) CHECK (
@@ -33,7 +33,7 @@ CREATE TABLE ports (
 );
 
 CREATE TABLE routes (
-    route_id INT PRIMARY KEY NOT NULL,
+    route_id SERIAL PRIMARY KEY NOT NULL,
     origin_port_id INT NOT NULL,
     destination_port_id INT NOT NULL,
     distance_km DECIMAL(10, 2),
@@ -44,7 +44,7 @@ CREATE TABLE routes (
 );
 
 CREATE TABLE shipments (
-    shipment_id INT PRIMARY KEY NOT NULL,
+    shipment_id SERIAL PRIMARY KEY NOT NULL,
     supplier_id INT NOT NULL,
     route_id INT NOT NULL,
     origin_port_id INT NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE shipments (
 );
 
 CREATE TABLE costs (
-    cost_id INT PRIMARY KEY NOT NULL,
+    cost_id SERIAL PRIMARY KEY NOT NULL,
     shipment_id INT NOT NULL,
     fuel_cost DECIMAL(10, 2) NOT NULL,
     port_fees DECIMAL(10, 2) NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE costs (
 );
 
 CREATE TABLE external_signals (
-    signal_id INT PRIMARY KEY NOT NULL,
+    signal_id SERIAL PRIMARY KEY NOT NULL,
     route_id INT NOT NULL,
     recorded_date DATE NOT NULL,
     fuel_price_usd DECIMAL(10, 2) NOT NULL,

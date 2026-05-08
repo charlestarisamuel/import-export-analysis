@@ -9,10 +9,15 @@ import requests #this is what python uses to call the API, it goes to the web ad
 
 def fetch_fuel_prices():
     api_key = os.getenv("EIA_API_KEY")
-    url = f"https://api.eia.gov/v2/petroleum/pri/spt/data/?api_key={api_key}&frequency=weekly&data[0]=value&sort[0][column]=period&sort[0][direction]=desc&length=10"
+    url = f"https://api.eia.gov/v2/petroleum/pri/spt/data/?api_key={api_key}&frequency=weekly&data[0]=value&facets[series][]=RBRTE&sort[0][column]=period&sort[0][direction]=desc&length=10"
+
+#we changed the url and added some more constraints because we wanted the data to be properly tailored and offer us one type of fuel price that concerns the business and not all of them.#
 
     response = requests.get(url) #sends the request to the url and gets a response back#
     data = response.json() #converts the reponse into a python dictionary we can work with#
+
+
+#we made sure we removed the debug print statements for our actual api data because it contains our api key before commiting.#
 
     prices = data['response']['data'] #since the EIA API gives us the data or wraps the data in nested layers, this line will dig into it and get the actual list of price records.#
 
@@ -33,4 +38,10 @@ def fetch_fuel_prices():
     cursor.close()
     conn.close()
     print("Fuel prices loaded successfully.")
-    
+
+
+if __name__ == "__main__": #indentation matters a lot. This block was not being read because it was inside our fuction based on indentation#
+     try:
+            fetch_fuel_prices()
+     except Exception as e:
+            print(f"Error: {e}")
